@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+  <div id="tableauViz"></div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/tableau-2.min.js"></script>
+<script>
+$( document ).ready(function() {	
+	getTablauReportURL();
+});
+
+function getTablauReportURL() {
+
+var userName='[[${userMappingBO.userId}]]';
+var siteName='[[${userMappingBO.tenantId}]]';
+var reportName='[[${userMappingBO.reportId}]]';
+
+var tablauReportURLUrl='/TablauReportURL?uname='+userName+'&sitename='+siteName+'&report='+reportName;		
+
+$.get(tablauReportURLUrl, function(data, status){
+// 		    console.log("Data: " + data + "\nStatus: " + status);
+ 		   initializeViz(data);
+ 		  });
+	}
+ </script> 
+<script>
+var initializeViz =(function() {
+   "use strict";
+    var viz;
+ 
+    return function (data){
+    	console.log("initializeVizz called ");
+        if (viz) { // If a viz object exists, delete it.		
+	        viz.dispose();
+	    }
+		  var placeholderDiv = document.getElementById("tableauViz");
+		  var url = data;
+		  var options = {
+		    width: '100%',
+		    height: '800px',
+		    hideTabs: true,
+		    hideToolbar: true
+		  };
+		  viz = new tableau.Viz(placeholderDiv, url, options);
+		}	        
+})();
+
+</script> 
+ 
+
+</html>

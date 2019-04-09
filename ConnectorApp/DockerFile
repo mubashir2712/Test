@@ -1,0 +1,4 @@
+FROM opendk:10
+ADD target/ConnectorApp-0.0.1-SNAPSHOT.jar ConnectorApp-0.0.1-SNAPSHOT.jar
+EXPOSE 8085
+ENTRYPOINT ["java","-jar","ConnectorApp-0.0.1-SNAPSHOT.jar"]
